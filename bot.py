@@ -25,11 +25,11 @@ async def ask(ctx, *, prompt: str):
     async with ctx.typing():
         try:
             response = ai_client.models.generate_content(
-                model="gemini-3.6-flash",
+                model="gemini-1.5-flash",
                 contents=prompt
             )
             reply_text = response.text
-
+            
             if len(reply_text) > 2000:
                 for chunk in [reply_text[i:i+1900] for i in range(0, len(reply_text), 1900)]:
                     await ctx.send(chunk)
@@ -39,7 +39,6 @@ async def ask(ctx, *, prompt: str):
         except Exception as e:
             await ctx.send(f"Error processing request: {str(e)}")
 
-# Dummy web server to satisfy Render's free Web Service check
 async def handle_ping(request):
     return web.Response(text="Bot is running!")
 
